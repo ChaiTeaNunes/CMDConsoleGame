@@ -38,11 +38,5 @@
     <ClInclude Include="enemy.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="progBar.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mainDraw.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
