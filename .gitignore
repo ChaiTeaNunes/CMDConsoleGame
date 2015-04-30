@@ -16,6 +16,10 @@ ipch/
 UpgradeLog*
 [Dd]ebug/
 
+# ignoring vcxproj and solution files, to avoid versioning issues. that means you need to manually make these.
+*.sln
+*.vcxproj
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
