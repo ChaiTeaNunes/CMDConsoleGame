@@ -20,27 +20,33 @@ public:
 	char input;
 	bool running;
 
-	Game(char * map, Vector2 size) : player(Vector2(4, 5), '@'), running(true), 
-		size(size), playArea(Vector2(0, 0), size), map(map)
-		//e1(Vector2(20, 10), 'a', &player, 1000), 
-		//e2(Vector2(10, 10), 'b', &player, 750)
-	{
-		for (int i = 0; i < ENEMY_COUNT; ++i)
-		{
+	Game(char * map, Vector2 size) : player(Vector2(4, 5), '@'), running(true), size(size),
+		playArea(Vector2(0, 0), size), map(map) {
+
+		for (int i = 0; i < ENEMY_COUNT; ++i) {
 			enemies[i] = Enemy(Vector2(i * 3 + 1, i * 2 + 1), 'a' + i, &player, 200 + (i * 200));
 		}
+
 	}
 
-	int mapIndex(int row, int col) { return row * size.x + col; }
+	int mapIndex(int row, int col) { 
+		return row * size.x + col;
+	}
 
-	void draw()
-	{
+	void draw() {
+
 		platform_move(6, 0);
+
 		for (int row = 0; row < size.y; ++row) {
+
 			for (int col = 0; col < size.x; ++col) {
+
 				bool enemyIsHere = false;
+
 				for (int i = 0; i < ENEMY_COUNT; ++i) {
+
 					enemyIsHere = enemies[i].position.equals(col, row);
+
 					if (enemyIsHere) {
 						putchar(enemies[i].icon);
 						break;
