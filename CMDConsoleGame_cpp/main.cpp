@@ -33,6 +33,19 @@ public:
 		SetCount(GetCount() + 1);
 		Set(GetCount() -1, value);
 	}
+	void Insert(int index, int value) {
+		SetCount(GetCount() + 1);
+		for (int i = size - 1; i > index; i--) {
+			Set(i, numbers[i - 1]);
+		}
+		Set(index, value);
+	}
+	void RemoveAt(int index) {
+		for (int i = index; i < size; i++) {
+			Set(i, numbers[i + 1]);
+		}
+		SetCount(GetCount() - 1);
+	}
 	void Release(){
 		if(numbers != nullptr){
 			delete [] numbers;
@@ -78,6 +91,12 @@ int main() {
 	cout << "the array with more numbers:" << endl;
 	list.Add(rand() % 50);
 	for(int i = 0; i < list.GetCount(); ++i) { cout << list.Get(i) << endl; }
+	list.Insert(2, 3);
+	cout << endl;
+	for (int i = 0; i < list.GetCount(); ++i) { cout << list.Get(i) << endl; }
+	cout << endl;
+	list.RemoveAt(2);
+	for (int i = 0; i < list.GetCount(); ++i) { cout << list.Get(i) << endl; }
 	platform_getch();
 	return 0;
 	char map[ 50 * 15 + 1 ] = // +1 for the null terminator
