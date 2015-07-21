@@ -85,6 +85,7 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="List.h" />
     <ClInclude Include="platform_conio.h" />
     <ClInclude Include="vector2.h" />
   </ItemGroup>

@@ -1,4 +1,6 @@
-#pragma once
+﻿#pragma once
+
+// Entity * ptr = new Entity;
 
 #include "vector2.h"
 #include "entity.h"
@@ -6,6 +8,7 @@
 #include "platform_conio.h"
 #include <stdio.h>
 #include "aabb.h"
+#include "List.h"
 
 class Game
 {
@@ -14,7 +17,8 @@ public:
 
 	Entity player;
 	static const int ENEMY_COUNT = 5;
-	Enemy enemies[ENEMY_COUNT];
+	// Enemy enemies[ENEMY_COUNT];
+	List<Enemy> enemies;
 	Vector2 size;
 	AABB playArea;
 	char input;
@@ -22,7 +26,7 @@ public:
 
 	Game(char * map, Vector2 size) : player(Vector2(4, 5), '@'), running(true), size(size),
 		playArea(Vector2(0, 0), size), map(map) {
-
+		enemies.SetCount(ENEMY_COUNT);
 		for (int i = 0; i < ENEMY_COUNT; ++i) {
 			enemies[i] = Enemy(Vector2(i * 3 + 1, i * 2 + 1), 'a' + i, &player, 200 + (i * 200));
 		}
@@ -43,7 +47,7 @@ public:
 
 				bool enemyIsHere = false;
 
-				for (int i = 0; i < ENEMY_COUNT; ++i) {
+				for (int i = 0; i < enemies.GetCount(); ++i) {
 
 					enemyIsHere = enemies[i].position.equals(col, row);
 
@@ -69,7 +73,7 @@ public:
 	bool IsEmptyLocation(int row, int col, int whoToIgnore) {
 		if (map[mapIndex(row, col)] == ' ') {
 			bool somebodyHere = false;
-			for (int i = 0; i < ENEMY_COUNT; i++) {
+			for (int i = 0; i < enemies.GetCount(); i++) {
 				if (i != whoToIgnore
 				&& enemies[i].position.x == col
 				&& enemies[i].position.y == row) {
@@ -86,6 +90,8 @@ public:
 	{
 		switch (input) {
 		case 27:	running = false;
+		case '\\':
+			enemies.Add(Enemy(Vector2(3, 3), enemies.GetCount() + 'a', &player, 300 + ((enemies.GetCount() * 100) % 2000)));
 		default:
 			player.nextMove = input;
 			break;
@@ -99,7 +105,7 @@ public:
 			player.position = oldPosition;
 		}
 		// aaaand do the exact same thing for each enemy, so the enemies have boundaries
-		for (int i = 0; i < ENEMY_COUNT; ++i) {
+		for (int i = 0; i < enemies.GetCount(); ++i) {
 			oldPosition = enemies[i].position;
 			enemies[i].Update(msPassed);
 			// if the player is outside of the area
