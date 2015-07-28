@@ -52,7 +52,7 @@ public:
 
 	void draw() {
 
-		platform_move(6, 0);
+		platform_move(0, 0);
 
 		for (int row = 0; row < size.y; ++row) {
 
@@ -120,7 +120,6 @@ public:
 				|| map[mapIndex(entities[i]->position.y, entities[i]->position.x)] != ' ') {
 				entities[i]->position = oldPosition; 
 				if (whoIsHere != -1){
-//					printf("collision happening! %c and %c\n", entities[i]->icon, entities[whoIsHere]->icon);
 					entities[i]->behave(entities[whoIsHere]->icon, entities[whoIsHere]);
 				}
 			}
