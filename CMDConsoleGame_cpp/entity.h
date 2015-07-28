@@ -1,8 +1,29 @@
 #pragma once
 
+#include <functional>
+#include "list.h"
 class Entity
 {
 public:
+
+	struct BehaviorInfo {
+		char icon;
+		std::function<void(Entity*self, Entity*other)> whatToDo;
+		BehaviorInfo(char icon, std::function<void(Entity*self, Entity*other)> what) : icon(icon), whatToDo(what) {}
+		BehaviorInfo(){}
+	};
+	List<BehaviorInfo> behaviors;
+	void addBehavior(char icon, std::function<void(Entity*self, Entity*other)> what) {
+		behaviors.add(BehaviorInfo(icon, what));
+	}
+	void behave(char icon, Entity * other){
+		for (int i = 0; i < behaviors.getSize(); ++i){
+			if (behaviors[i].icon == icon) {
+				behaviors[i].whatToDo(this, other);
+			}
+		}
+	}
+
 	Vector2 position;
 	char icon, nextMove;
 	int damaged, hp;
@@ -14,7 +35,7 @@ public:
 		return damaged >= hp;
 	}
 
-	void Update(int msPassed)
+	virtual void Update(int msPassed)
 	{
 		switch (nextMove) {
 		case 'w':	--position.y;	break;

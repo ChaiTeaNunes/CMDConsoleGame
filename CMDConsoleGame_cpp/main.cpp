@@ -30,6 +30,7 @@ int main() {
 	mapTest.SetSize(Vector2(50, 15));
 	mapTest.SetData(map);
 	mapTest.Draw();
+	printf("entity: %d, enemy %d\n", sizeof(Entity), sizeof(Enemy));
 	platform_getch();
 	Game g(map, Vector2(50, 15));
 	long long lastKnownTime = platform_upTimeMS(), now, msPassed;
