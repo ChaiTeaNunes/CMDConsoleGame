@@ -26,7 +26,7 @@ public:
 
 	Game(char * map, Vector2 size) : player(Vector2(4, 5), '@'), running(true), size(size),
 		playArea(Vector2(0, 0), size), map(map) {
-		enemies.SetCount(ENEMY_COUNT);
+		enemies.setSize(ENEMY_COUNT);
 		for (int i = 0; i < ENEMY_COUNT; ++i) {
 			enemies[i] = Enemy(Vector2(i * 3 + 1, i * 2 + 1), 'a' + i, &player, 200 + (i * 200));
 		}
@@ -47,7 +47,7 @@ public:
 
 				bool enemyIsHere = false;
 
-				for (int i = 0; i < enemies.GetCount(); ++i) {
+				for (int i = 0; i < enemies.getSize(); ++i) {
 
 					enemyIsHere = enemies[i].position.equals(col, row);
 
@@ -73,7 +73,7 @@ public:
 	bool IsEmptyLocation(int row, int col, int whoToIgnore) {
 		if (map[mapIndex(row, col)] == ' ') {
 			bool somebodyHere = false;
-			for (int i = 0; i < enemies.GetCount(); i++) {
+			for (int i = 0; i < enemies.getSize(); i++) {
 				if (i != whoToIgnore
 				&& enemies[i].position.x == col
 				&& enemies[i].position.y == row) {
@@ -88,13 +88,13 @@ public:
 
 	void update(int msPassed)
 	{
-		while (userInput.GetCount() > 0) {
+		while (userInput.getSize() > 0) {
 			int input = userInput[0];
-			userInput.RemoveAt(0);
+			userInput.removeAt(0);
 			switch (input) {
 			case 27:	running = false;
 			case '\\':
-				enemies.Add(Enemy(Vector2(3, 3), enemies.GetCount() + 'a', &player, 300 + ((enemies.GetCount() * 100) % 2000)));
+				enemies.add(Enemy(Vector2(3, 3), enemies.getSize() + 'a', &player, 300 + ((enemies.getSize() * 100) % 2000)));
 			default:
 				player.nextMove = input;
 				break;
@@ -109,7 +109,7 @@ public:
 			player.position = oldPosition;
 		}
 		// aaaand do the exact same thing for each enemy, so the enemies have boundaries
-		for (int i = 0; i < enemies.GetCount(); ++i) {
+		for (int i = 0; i < enemies.getSize(); ++i) {
 			oldPosition = enemies[i].position;
 			enemies[i].Update(msPassed);
 			// if the player is outside of the area
@@ -125,7 +125,7 @@ public:
 
 	void getUserInput() {
 		while (platform_kbhit()) {
-			userInput.Add(platform_getchar());
+			userInput.add(platform_getchar());
 		}
 	}
 

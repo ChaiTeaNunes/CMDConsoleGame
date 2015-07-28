@@ -62,35 +62,6 @@ public:
 	}
 
 	/**
-	* Sets all the whole list to be another list.
-	*
-	* @param	list	the new list
-	*/
-	void setList(List list) {
-		if (typeid(list).name() == typeid(objects).name()) {
-			objects = list;
-		}
-	}
-
-	/**
-	* Sets all the whole list to be another list.
-	*
-	* @param	list	the new list
-	*/
-	void setList(TYPE[] list) {
-		objects = list;
-	}
-
-	/**
-	* Sets all the whole list to be another list.
-	*
-	* @param	list	the new list
-	*/
-	void setList(TYPE * list) {
-		objects = list;
-	}
-
-	/**
 	* Sets the size of the list, trimming objects from the end and seting new objects to 0.
 	*
 	* @param	newSize	the new size of the list
@@ -98,18 +69,13 @@ public:
 	void setSize(int newSize) {
 		TYPE * newObjects = new TYPE[newSize];
 		if (objects != nullptr) {
-			for (int i = 0; i < newSize; i++) {
-				if (i < getSize()) {
-					newObjects[i] = get(i);
-				}
-				else {
-					newObjects[i] = 0;
-				}
+			for (int i = 0; i < newSize && i < getSize(); i++) {
+				newObjects[i] = get(i);
 			}
 			delete[] objects;
 		}
-		setList(newObjects);
-		setSize(newSize);
+		objects = newObjects;
+		size = newSize;
 	}
 
 	/**
@@ -119,9 +85,7 @@ public:
 	* @param	value	the new value for the selected object
 	*/
 	void set(int index, TYPE value) {
-		if (objects[index] != value) {
-			objects[index] = value;
-		}
+		objects[index] = value;
 	}
 
 	/**
@@ -237,13 +201,9 @@ public:
 	* Flips all of the objects in the list.
 	*/
 	void flip() {
-		TYPE * flipped = new TYPE[getSize()];
-		for (int i = 0; i < getSize(); i++) {
-			for (int j = getSize() - 1; j <= 0; j--) {
-				flipped[i] = j;
-			}
+		for (int i = 0; i < getSize() / 2; i++) {
+			swap(i, getSize() - 1 - i);
 		}
-		setList(flipped);
 	}
 
 	/**
@@ -299,7 +259,7 @@ public:
 	void clear(){
 		if (objects != nullptr) {
 			delete[] objects;
-			setList(nullptr);
+			objects = nullptr;
 			setSize(0);
 		}
 	}
@@ -337,7 +297,7 @@ public:
 	* Deconstructor.
 	*/
 	~List() {
-		reset();
+		clear();
 	}
 };
 
