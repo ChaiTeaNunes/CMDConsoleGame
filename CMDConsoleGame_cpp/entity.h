@@ -2,6 +2,8 @@
 
 #include <functional>
 #include "list.h"
+using namespace std;
+
 class Entity
 {
 public:
@@ -9,11 +11,11 @@ public:
 	struct BehaviorInfo {
 		char icon;
 		std::function<void(Entity*self, Entity*other)> whatToDo;
-		BehaviorInfo(char icon, std::function<void(Entity*self, Entity*other)> what) : icon(icon), whatToDo(what) {}
+		BehaviorInfo(char icon, function<void(Entity*self, Entity*other)> what) : icon(icon), whatToDo(what) {}
 		BehaviorInfo(){}
 	};
 	List<BehaviorInfo> behaviors;
-	void addBehavior(char icon, std::function<void(Entity*self, Entity*other)> what) {
+	void addBehavior(char icon, function<void(Entity*self, Entity*other)> what) {
 		behaviors.add(BehaviorInfo(icon, what));
 	}
 	void behave(char icon, Entity * other){
