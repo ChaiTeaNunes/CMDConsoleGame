@@ -23,10 +23,14 @@ public:
 	}
 	AABB(Vector2 cornerA, Vector2 cornerB) {
 		// TODO #define MIN, MAX
-		min.x = (cornerA.x < cornerB.x) ? cornerA.x : cornerB.x;
-		min.y = (cornerA.y < cornerB.y) ? cornerA.y : cornerB.y;
-		max.x = (cornerA.x > cornerB.x) ? cornerA.x : cornerB.x;
-		max.y = (cornerA.y > cornerB.y) ? cornerA.y : cornerB.y;
+#define BIGR(a, b)	((a>b)?(a):(b))
+#define SMAL(a, b)	((a<b)?(a):(b))
+		min.x = SMAL(cornerA.x, cornerB.x);
+		min.y = SMAL(cornerA.y, cornerB.y);
+		max.x = BIGR(cornerA.x, cornerB.x);
+		max.y = BIGR(cornerA.y, cornerB.y);
 		// TODO #undef MIN, MAX
+#undef BIGR
+#undef SMAL
 	}
 };

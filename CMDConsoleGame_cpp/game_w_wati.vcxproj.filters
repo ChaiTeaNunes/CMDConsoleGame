@@ -41,5 +41,8 @@
     <ClInclude Include="List.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="map2d.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

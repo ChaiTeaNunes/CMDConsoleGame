@@ -12,6 +12,7 @@
 
 class Game
 {
+	List<int> userInput;
 public:
 	char * map;
 
@@ -21,7 +22,6 @@ public:
 	List<Enemy> enemies;
 	Vector2 size;
 	AABB playArea;
-	char input;
 	bool running;
 
 	Game(char * map, Vector2 size) : player(Vector2(4, 5), '@'), running(true), size(size),
@@ -88,13 +88,17 @@ public:
 
 	void update(int msPassed)
 	{
-		switch (input) {
-		case 27:	running = false;
-		case '\\':
-			enemies.Add(Enemy(Vector2(3, 3), enemies.GetCount() + 'a', &player, 300 + ((enemies.GetCount() * 100) % 2000)));
-		default:
-			player.nextMove = input;
-			break;
+		while (userInput.GetCount() > 0) {
+			int input = userInput[0];
+			userInput.RemoveAt(0);
+			switch (input) {
+			case 27:	running = false;
+			case '\\':
+				enemies.Add(Enemy(Vector2(3, 3), enemies.GetCount() + 'a', &player, 300 + ((enemies.GetCount() * 100) % 2000)));
+			default:
+				player.nextMove = input;
+				break;
+			}
 		}
 		Vector2 oldPosition = player.position;
 		player.Update(msPassed);
@@ -120,10 +124,9 @@ public:
 	}
 
 	void getUserInput() {
-		if (platform_kbhit())
-			input = platform_getchar();
-		else
-			input = -1;
+		while (platform_kbhit()) {
+			userInput.Add(platform_getchar());
+		}
 	}
 
 	void throttleCode(int msDelay) {

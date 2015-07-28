@@ -1,8 +1,7 @@
 #pragma once
 
-class Vector2
+struct Vector2
 {
-public:
 	int x, y;
 	// default constructor
 	Vector2() : x(0), y(0) { }
